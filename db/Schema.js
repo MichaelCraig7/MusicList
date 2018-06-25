@@ -30,12 +30,27 @@ const PlaylistSchema = new Schema({
 })	
 
 const SongSchema = new Schema({
-	userName: {
+	title: {
 		type: String
 	},
-	password: {
+	artist: {
 		type: String
-	}
+    },
+    album: {
+		type: String
+	},
+	albumImage: {
+		type: String
+    },
+    songLength: {
+		type: Number
+	},
+	genre: {
+		type: String
+    },
+    dateAdded: {
+        type: Date
+    }
 })
 
 const UserModel = mongoose.model('user', UserSchema)
