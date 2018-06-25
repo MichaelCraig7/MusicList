@@ -1,23 +1,29 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const UserSchema = new Schema({
-	username: {
-        type: String,
-        default: 'Lazy User'
-	},
-	password: {
-		type: String
-	},
-	userImage: {
-        type: String,
-        default: 'https://picsum.photos/200/300/?random'
+const SongSchema = new Schema({
+    title: {
+        type: String
     },
-    playlists: [ userPlaylists ]
+    artist: {
+        type: String
+    },
+    album: {
+        type: String
+    },
+    albumImage: {
+        type: String
+    },
+    genre: {
+        type: String
+    },
+    dateAdded: {
+        type: Date
+    }
 })
 
 const PlaylistSchema = new Schema({
-	title: {
+    title: {
         type: String,
         default: 'My Playlist'
 	},
@@ -26,31 +32,23 @@ const PlaylistSchema = new Schema({
         default: 'https://picsum.photos/200/300/?random'
 	},
     dateCreated: Date,
-    songs: [ songsInPlaylist ]
+    songs: [ SongSchema ]
 })	
 
-const SongSchema = new Schema({
-	title: {
-		type: String
-	},
-	artist: {
-		type: String
+
+const UserSchema = new Schema({
+    username: {
+        type: String,
+        default: 'Lazy User'
     },
-    album: {
-		type: String
-	},
-	albumImage: {
-		type: String
+    password: {
+        type: String
     },
-    songLength: {
-		type: Number
-	},
-	genre: {
-		type: String
+    userImage: {
+        type: String,
+        default: 'https://picsum.photos/200/300/?random'
     },
-    dateAdded: {
-        type: Date
-    }
+    playlists: [ PlaylistSchema ]
 })
 
 const UserModel = mongoose.model('user', UserSchema)
