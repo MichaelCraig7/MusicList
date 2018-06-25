@@ -1,14 +1,13 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 const { UserModel } = require('../db/Schema.js')
 
-/* GET users listing. */
 router.get('/', async (req, res) => {
   const user = await UserModel.find()
   res.send({
     user
   })
-});
+})
 
 router.get('/:id', async (req, res) => {
   const showUser = await UserModel.findById(req.params.id)
@@ -42,4 +41,5 @@ router.delete('/:id', async (req, res) => {
     user: findUser
   })
 })
-module.exports = router;
+
+module.exports = router

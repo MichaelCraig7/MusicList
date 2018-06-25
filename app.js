@@ -19,6 +19,7 @@ connection.on('error', (err) => {
   console.log('Mongoose default connection error: ' + err);
 });
 
+const playlistsRouter = require('./routes/playlists')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 //app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.static(__dirname + '/client/build/'));
+app.use('/api/users/:userId/playlists', playlistsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/index', indexRouter);
 
