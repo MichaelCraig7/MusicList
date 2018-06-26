@@ -9,7 +9,6 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <h1>App</h1>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" render={Login} />
