@@ -22,10 +22,22 @@ router.post('/', async (req, res) => {
     const user = await UserModel.findById(req.params.userId)
     const newPlaylist = await new PlaylistModel(req.body)
     user.playlists.push(newPlaylist)
+    user.save()
     res.send({
         newPlaylist
     })
-    console.log('****', newPlaylist)
+})
+
+router.patch('/:playlistId', async (req, res) => {
+    const user = await UserModel.findById(req.params.userId)
+    const playlist = user.playlists.id(req.params.playlistId)
+    playlist.title = req.body.title
+    playlist.image = req.body.image
+    playlist.dateCreated = req.body.dateCreated
+    playlist.songs = req.body.songs
+    res.send({
+        playlist
+    })
 })
 
 module.exports = router
