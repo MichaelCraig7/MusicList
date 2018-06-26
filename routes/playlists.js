@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router({mergeParams: true})
+const router = express.Router({ mergeParams: true })
 const { UserModel, PlaylistModel } = require('../db/Schema.js')
 
 router.get('/', async (req, res) => {
@@ -20,7 +20,8 @@ router.get('/:playlistId', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const user = await UserModel.findById(req.params.userId)
-    const newPlaylist = await new user.playlists.push(req.body).save()
+    const newPlaylist = await new PlaylistModel(req.body)
+    user.playlists.push(newPlaylist)
     res.send({
         newPlaylist
     })
