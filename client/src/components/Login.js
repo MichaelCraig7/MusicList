@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios'
+import SearchResults from './SearchResults'
+
 
 class Login extends Component {
 
@@ -8,25 +10,19 @@ class Login extends Component {
         password: ''
     }
 
-    // componentDidMount() {
-    //     axios.get('/api/users').then((res) => {
-    //         this.setState( `/users/${res.data._id}` )
-    //     })
-    // }
-
     handleChange = (e) => {
         const inputName = e.target.name
         const userInput = e.target.value
         const newState = { ...this.state }
-        newState[ inputName ] = userInput
-        this.setState( newState )
+        newState[inputName] = userInput
+        this.setState(newState)
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
         axios.post('/api/users', this.state).then((res) => {
             console.log(res.data);
-            this.props.history.push(`/users/${res.data._id}`)
+            this.props.history.push(`/user/${res.data.newUser._id}`)
         })
     }
 
@@ -52,8 +48,8 @@ class Login extends Component {
                     <button type='submit'>Login</button>
                 </form>
             </div>
-        );
+        )
     }
 }
 
-export default Login;
+export default Login
