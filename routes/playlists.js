@@ -4,9 +4,27 @@ const { UserModel, PlaylistModel } = require('../db/Schema.js')
 
 router.get('/', async (req, res) => {
     const user = await UserModel.findById(req.params.userId)
-    const playlists = await user.playlists
-    res.send(playlists)
+    const playlists = user.playlists
+    res.send({
+        playlists
+    })
+})
 
+router.get('/:playlistId', async (req, res) => {
+    const user = await UserModel.findById(req.params.userId)
+    const playlist = user.playlists.id(req.params.playlistId)
+    res.send({
+        playlist
+    })
+})
+
+router.post('/', async (req, res) => {
+    const user = await UserModel.findById(req.params.userId)
+    const newPlaylist = await new user.playlists.push(req.body).save()
+    res.send({
+        newPlaylist
+    })
+    console.log('****', newPlaylist)
 })
 
 module.exports = router

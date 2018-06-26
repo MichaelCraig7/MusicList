@@ -35,7 +35,6 @@ const PlaylistSchema = new Schema({
     songs: [ SongSchema ]
 })	
 
-
 const UserSchema = new Schema({
     username: {
         type: String,
