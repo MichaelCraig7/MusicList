@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios'
 
 class UserPage extends Component {
 
@@ -12,6 +12,10 @@ class UserPage extends Component {
         this.setState({
             query: e.target.value
         })
+    }
+
+    playlists = () => {
+        axios.get(`/api/users/${userId}/playlist`)
     }
 
     render() {
