@@ -35,6 +35,7 @@ router.patch('/:playlistId', async (req, res) => {
     playlist.image = req.body.image
     playlist.dateCreated = req.body.dateCreated
     playlist.songs = req.body.songs
+    user.save()
     res.send({
         playlist
     })
