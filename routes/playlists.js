@@ -41,4 +41,14 @@ router.patch('/:playlistId', async (req, res) => {
     })
 })
 
+router.delete('/:playlistId', async (req, res) => {
+    const user = await UserModel.findById(req.params.userId)
+    const playlist = user.playlists.id(req.params.playlistId)
+    playlist.remove()
+    user.save()
+    res.send({
+        user
+    })
+})
+
 module.exports = router
