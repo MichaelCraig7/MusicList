@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import styled from 'styled-components'
+import Playlist from './Playlist';
 
 
 const UserPageStyles = styled.div`
@@ -70,21 +71,28 @@ class UserPage extends Component {
     render() {
         if (this.state.data.showUser === undefined) {
             return null
-        } 
+        }
+
+        const PlaylistPayload = (props) => (
+            <Playlist
+                userPageState={this.state} {...props} />
+        )
+
         console.log(this.state.data.showUser);
         const user = this.state.user
         const userImage = this.state.data.showUser.userImage
         const userId = this.props.match.params.userId
         const userNameUrl = `/user/${userId}`
+
         return (
             <UserPageStyles>
-                <Link to={userNameUrl}><img src={userImage} alt='' height='50' width/>{user}</Link>
+                <Link to={userNameUrl}><img src={userImage} alt='' height='50' width='50' />{user}</Link>
                 <form onSubmit={this.onSubmitQuery}>
                     <input type='text' placeholder='Search' />
                     <input type='submit' value='Search' />
                 </form>
 
-                <h1><img src={userImage} alt='' height='50' width/>{user}</h1>
+                <h1><img src={userImage} alt='' height='50' width='50' />{user}</h1>
                 <br />
                 <br />
                 <br />
@@ -107,6 +115,7 @@ class UserPage extends Component {
                             </div>
                         )
                     })}
+                    <Route exact path="/user/:userId/playlist/:playlistId" render={PlaylistPayload} />
                 </div>
             </UserPageStyles>
         );
