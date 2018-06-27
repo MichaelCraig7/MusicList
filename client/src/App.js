@@ -19,7 +19,20 @@ const AppStyles = styled.div`
 `
 
 class App extends Component {
+  // state = {
+  //   fromUserPage: {}
+  // }
+
+  // collectStateFromUserPage = (dataFromUserPage) => {
+  //   this.setState({ fromUserPage: dataFromUserPage })
+  // }
+
+
   render() {
+  //   const playlistComponent = (props) => (
+  //     <Playlist {...props} data={this.state.fromUserPage} />
+  //   )
+
     return (
       <AppStyles>
         <Router>
@@ -28,9 +41,9 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/new" component={NewUserLogin} />
-              <Route exact path="/user/:userId" component={UserPage} />
               <Route exact path="/user/:userId/results" component={SearchResults} />
-              <Route exact path="/user/:userId/playlist/:playlistId" component={Playlist} />
+              <Route path="/user/:userId" component={UserPage} />
+              {/* <Route exact path="/user/:userId/playlist/:playlistId" render={Playlist} /> */}
             </Switch>
           </div>
         </Router>

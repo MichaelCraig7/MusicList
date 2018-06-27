@@ -6,26 +6,31 @@ import axios from 'axios'
 
 class Playlist extends Component {
 
-    state = {
-        userPageState: []
-    }
+    // state = {
+    //     userPageState: {}
+    // }
 
-    componentDidMount() {
-        axios.get('/api/users').then((res) => {
-            this.setState({
-                userPageState: res.data
-            })
-        })
-    }
+    // componentDidMount() {
+    //     axios.get('/api/users').then((res) => {
+    //         this.setState({
+    //             userPageState: res.data
+    //         })
+    //     })
+    // }
 
     render() {
+        // const fixThings = this.state.userPageState || []
+
+        // if (this.state === {}) {
+        //     return null
+        // }
 
         console.log(this)
 
 
         // const user = this.state.user
-        // const userImage = this.state.data.showUser.userImage
-        const userId = this.props.match.params.userId
+        // const userImage = this.state.userPageState.user.userImage
+        // const userId = this.props.match.params.userId
         // const userNameUrl = `/user/${userId}`
 
         return (

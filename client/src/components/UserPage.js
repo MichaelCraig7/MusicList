@@ -69,13 +69,14 @@ class UserPage extends Component {
     }
 
     render() {
+        // this.props.passedFromApp(this.state)
+
         if (this.state.data.showUser === undefined) {
             return null
         }
 
         const PlaylistPayload = (props) => (
-            <Playlist
-                userPageState={this.state} {...props} />
+            <Playlist data={this.state}/>
         )
 
         console.log(this.state.data.showUser);
