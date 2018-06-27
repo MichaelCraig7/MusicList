@@ -7,6 +7,8 @@ import UserPage from './components/UserPage'
 import SearchResults from './components/SearchResults'
 import Playlist from './components/Playlist'
 import styled from 'styled-components'
+import axios from 'axios'
+
 
 const AppStyles = styled.div`
   color: white;
@@ -19,19 +21,52 @@ const AppStyles = styled.div`
 `
 
 class App extends Component {
-  // state = {
-  //   fromUserPage: {}
+
+  state = {
+    data: {},
+    user: '',
+    playlists: [],
+    query: '',
+  }
+
+  // getUsername() {
+  //   const userId = this.state
+  //   axios.get(`/api/users/${userId}`).then((res) => {
+  //     console.log('getusername', res);
+  //     return (
+  //       this.setState({
+  //         user: res.data.showUser.username,
+  //         data: res.data
+  //       }))
+  //   })
   // }
 
-  // collectStateFromUserPage = (dataFromUserPage) => {
-  //   this.setState({ fromUserPage: dataFromUserPage })
+  // getPlaylists() {
+  //   const userId = this.props.match.params.userId
+
+  //   axios.get(`/api/users/${userId}/playlists`).then((res) => {
+  //     // console.log('getplaylists', res);
+  //     return (
+  //       this.setState({
+  //         playlists: res.data.playlists,
+  //         title: res.data.playlists[0].title
+  //       }))
+  //   })
   // }
 
+  // componentDidMount() {
+  //   this.getUsername()
+  //   // this.getPlaylists()
+  // }
 
   render() {
-  //   const playlistComponent = (props) => (
-  //     <Playlist {...props} data={this.state.fromUserPage} />
-  //   )
+
+    // const PlaylistPayload = (props) => (
+    //   <Playlist data={this.state} {...props}/>
+    // )
+    // const UserPagePayload = (props) => (
+    //   <UserPage data={this.state} {...props}/>
+    // )
 
     return (
       <AppStyles>
@@ -42,8 +77,8 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/new" component={NewUserLogin} />
               <Route exact path="/user/:userId/results" component={SearchResults} />
-              <Route path="/user/:userId" component={UserPage} />
-              {/* <Route exact path="/user/:userId/playlist/:playlistId" render={Playlist} /> */}
+              <Route exact path="/user/:userId" component={UserPage} />
+              <Route exact path="/user/:userId/playlist/:playlistId" component={Playlist} />
             </Switch>
           </div>
         </Router>

@@ -69,7 +69,6 @@ class UserPage extends Component {
     }
 
     render() {
-        // this.props.passedFromApp(this.state)
 
         if (this.state.data.showUser === undefined) {
             return null
@@ -107,7 +106,7 @@ class UserPage extends Component {
                         return (
                             <div key={playlist._id}>
                                 <Link to={playlistUrl} >
-                                    <img src={playlist.image} alt='' height='150px' width='150' />
+                                    <img src={playlist.image} alt='' height='150' width='150' />
                                 </Link>
                                 <br />
                                 <Link to={playlistUrl} >

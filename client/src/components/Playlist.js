@@ -1,37 +1,61 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 
 
 class Playlist extends Component {
 
-    // state = {
-    //     userPageState: {}
-    // }
+    state = {
+        data: {},
+        user: '',
+        playlists: [],
+        query: '',
+    }
 
-    // componentDidMount() {
-    //     axios.get('/api/users').then((res) => {
-    //         this.setState({
-    //             userPageState: res.data
-    //         })
-    //     })
-    // }
+    onSubmitQuery(e) {
+        this.setState({
+            query: e.target.value
+        })
+    }
+
+    populateState() {
+        const userId = this.props.match.params.userId
+        axios.get(`/api/users/${userId}`).then((res) => {
+            return (
+                this.setState({
+                    user: res.data.showUser.username,
+                    data: res.data,
+                }))
+        })
+    }
+
+    getPlaylists() {
+        const userId = this.props.match.params.userId
+        axios.get(`/api/users/${userId}/playlists`).then((res) => {
+            return (
+                this.setState({
+                    playlists: res.data.playlists,
+                    title: res.data.playlists[0].title
+                }))
+        })
+    }
+
+    componentDidMount() {
+        this.populateState()
+    }
 
     render() {
-        // const fixThings = this.state.userPageState || []
-
-        // if (this.state === {}) {
-        //     return null
-        // }
+        if (this.state.data.showUser === undefined) {
+            return null
+        }
 
         console.log(this)
 
 
-        // const user = this.state.user
-        // const userImage = this.state.userPageState.user.userImage
-        // const userId = this.props.match.params.userId
-        // const userNameUrl = `/user/${userId}`
+        const user = this.state.user
+        const userImage = this.state.data.showUser.userImage
+        const userId = this.props.match.params.userId
+        const userNameUrl = `/user/${userId}`
 
         return (
             <div>
