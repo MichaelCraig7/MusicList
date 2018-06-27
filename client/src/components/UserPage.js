@@ -14,6 +14,7 @@ const UserPageStyles = styled.div`
 class UserPage extends Component {
 
     state = {
+        data: {},
         user: '',
         playlists: [],
         query: '',
@@ -32,6 +33,7 @@ class UserPage extends Component {
             return (
                 this.setState({
                     user: res.data.showUser.username,
+                    data: res.data
                 }))
         })
     }
@@ -66,16 +68,23 @@ class UserPage extends Component {
     }
 
     render() {
-        console.log(this.state.user);
+        if (this.state.data.showUser === undefined) {
+            return null
+        } 
+        console.log(this.state.data.showUser);
         const user = this.state.user
+        const userImage = this.state.data.showUser.userImage
+        const userId = this.props.match.params.userId
+        const userNameUrl = `/user/${userId}`
         return (
             <UserPageStyles>
-                {/* <Link to=`/user/:userId`>{user}</Link> */}
+                <Link to={userNameUrl}><img src={userImage} alt='' height='50' width/>{user}</Link>
                 <form onSubmit={this.onSubmitQuery}>
                     <input type='text' placeholder='Search' />
                     <input type='submit' value='Search' />
                 </form>
-                <h1>{user}</h1>
+
+                <h1><img src={userImage} alt='' height='50' width/>{user}</h1>
                 <br />
                 <br />
                 <br />
@@ -85,13 +94,14 @@ class UserPage extends Component {
                 <div>
                     {this.state.playlists.map(playlist => {
                         console.log(this.state);
+                        const playlistUrl = `/user/${userId}/playlist/${playlist._id}`
                         return (
                             <div key={playlist._id}>
-                                <Link to='/user/:userId/playlist/:playlistId' >
+                                <Link to={playlistUrl} >
                                     <img src={playlist.image} alt='' height='150px' width='150' />
                                 </Link>
                                 <br />
-                                <Link to='/user/:userId/playlist/:playlistId' >
+                                <Link to={playlistUrl} >
                                     {playlist.title}
                                 </Link>
                             </div>
