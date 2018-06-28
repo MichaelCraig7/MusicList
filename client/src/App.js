@@ -7,7 +7,7 @@ import UserPage from './components/UserPage'
 import SearchResults from './components/SearchResults'
 import Playlist from './components/Playlist'
 import styled from 'styled-components'
-import axios from 'axios'
+// import axios from 'axios'
 
 
 const AppStyles = styled.div`
