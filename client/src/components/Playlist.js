@@ -41,30 +41,17 @@ class Playlist extends Component {
             })
     }
 
-    deletePlaylist = (playlistId) => {
-        const userId = this.props.match.params.userId
-        axios.delete(`/api/users/${userId}/playlists/${playlistId}`)
-            .then(() => {
-                return axios.get(`/api/users/${userId}`)
-                    .then(res => {
-                        this.setState({
-                            user: res.data.showUser,
-                            playlists: res.data.showUser.playlists
-                        })
-                    })
-            })
-    }
-
     deleteSong = (songId) => {
         const userId = this.props.match.params.userId
         const playlistId = this.props.match.params.playlistId
         axios.delete(`/api/users/${userId}/playlists/${playlistId}/songs/${songId}`)
             .then(() => {
-                return axios.get(`/api/users/${userId}`)
+                return axios.get(`/api/users/${userId}/playlists/${playlistId}`)
                     .then(res => {
                         this.setState({
                             user: res.data.showUser,
-                            playlists: res.data.showUser.playlists
+                            playlists: res.data.showUser.playlists,
+                            songs: res.data.playlists.songs
                         })
                     })
             })
