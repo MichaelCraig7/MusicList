@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import Playlist from './Playlist';
 
 
 const UserPageStyles = styled.div`
@@ -15,10 +14,9 @@ const UserPageStyles = styled.div`
 class UserPage extends Component {
 
     state = {
-        data: {},
         user: {},
         playlists: [],
-        query: '',
+        query: ''
     }
 
     onSubmitQuery(e) {
@@ -30,68 +28,56 @@ class UserPage extends Component {
     getUsername() {
         const userId = this.props.match.params.userId
         axios.get(`/api/users/${userId}`).then(res => {
-            console.log('getusername', res.data.showUser);
-            return (
-                this.setState({
-                    user: res.data.showUser
-                    // data: res.data
-                }))
-        })
-    }
-
-    getPlaylists() {
-        const userId = this.props.match.params.userId
-
-        axios.get(`/api/users/${userId}/playlists`).then(res => {
-            console.log('getplaylists', res);
-            return (
-                this.setState({
-                    playlists: res.data.playlists,
-                    // title: res.data.playlists[0].title
-                }))
+            this.setState({
+                user: res.data.showUser,
+                playlists: res.data.showUser.playlists
+            })
         })
     }
 
     newPlaylist = () => {
         const userId = this.props.match.params.userId
-        axios.post(`/api/users/${userId}/playlists`).then(res => {
-            return (
-                this.setState({
-                    playlists: res.data.playlists
-                }))
+        axios.post(`/api/users/${userId}/playlists`).then(() => {
+            return axios.get(`/api/users/${userId}`)
+                .then(res => {
+                    this.setState({
+                        playlists: res.data.showUser.playlists
+                    })
+                })
         })
     }
 
     deletePlaylist = (playlistId) => {
         const userId = this.props.match.params.userId
-        axios.delete(`/api/users/${userId}/playlists/${playlistId}`).then(res => {
-            console.log(this.props.match);
-            return (
-                this.setState({
-                    playlists: res.data.playlists
-                })
-            )
-        })
+        axios.delete(`/api/users/${userId}/playlists/${playlistId}`)
+            .then(() => {
+                return axios.get(`/api/users/${userId}`)
+                    .then(res => {
+                        this.setState({
+                            user: res.data.showUser,
+                            playlists: res.data.showUser.playlists
+                        })
+                    })
+            })
     }
 
     componentDidMount() {
         this.getUsername()
-        this.getPlaylists()
     }
 
     render() {
-        
-        console.log(username)
-        
+
         if (!this.state.user._id) {
             return 'Loading'
         }
-        
+
         const username = this.state.user.username || ''
         const user = this.state.user || {}
         const userId = this.props.match.params.userId
-        const userImage = this.state.user.userImage||''
+        const userImage = this.state.user.userImage || ''
         const userNameUrl = `/user/${userId}`
+        const playlists = this.state.playlists
+        console.log(playlists)
 
         return (
             <UserPageStyles>
@@ -112,9 +98,7 @@ class UserPage extends Component {
                 <h1>Playlists</h1>
                 <button onClick={this.newPlaylist}>New Playlist</button>
                 <div>
-
-                    {this.state.playlists.map(playlist => {
-                        // console.log(this.state);
+                    {playlists.map(playlist => {
                         const playlistUrl = `/user/${userId}/playlist/${playlist._id}`
                         return (
                             <div key={playlist._id}>
@@ -125,13 +109,12 @@ class UserPage extends Component {
                                 <Link to={playlistUrl} >
                                     {playlist.title}
                                 </Link>
-                                <button onClick={this.deletePlaylist}>DELETE</button>
+                                <button onClick={() => this.deletePlaylist(playlist._id)}>DELETE</button>
                             </div>
                         )
                     })}
-                    {/* <Route exact path="/user/:userId/playlist/:playlistId" render={PlaylistPayload} /> */}
                 </div>
-            </UserPageStyles>
+            </UserPageStyles >
         );
     }
 }

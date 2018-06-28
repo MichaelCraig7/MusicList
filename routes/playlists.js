@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     user.playlists.push(newPlaylist)
     user.save()
     res.send({
-        newPlaylist
+        user
     })
 })
 
