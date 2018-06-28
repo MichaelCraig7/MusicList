@@ -16,7 +16,43 @@ class UserPage extends Component {
     state = {
         user: {},
         playlists: [],
-        query: ''
+        query: '',
+        toggleEdit: false
+    }
+
+    toggleEdit() {
+        const editPlaylist = !this.state.toggleEdit
+        this.setState({
+            editPlaylist
+        })
+    }
+
+    handleChange = (event, playlistId) => {
+        const playlistArray = [...this.state.playlists]
+        console.log(playlistId);
+        
+        const editedPlaylist = playlistArray.find(playlist => playlist._id === playlistId)
+        console.log(editedPlaylist);
+        
+        const inputName = event.target.name
+        const userInput = event.target.value
+        editedPlaylist[inputName] = userInput
+        this.setState({ playlists: playlistArray })
+    }
+
+    editPlaylist = (playlistId) => {
+        const userId = this.props.match.params.userId
+        const playlistEdit = this.state.playlists.find(playlist => playlist._id === playlistId)
+        axios.patch(`/api/users/${userId}/playlists/${playlistId}`, playlistEdit)
+            .then(() => {
+                return axios.get(`/api/users/${userId}`)
+                    .then(res => {
+                        this.setState({
+                            user: res.data.showUser,
+                            playlists: res.data.showUser.playlists
+                        })
+                    })
+            })
     }
 
     onSubmitQuery(e) {
@@ -101,14 +137,33 @@ class UserPage extends Component {
                         const playlistUrl = `/user/${userId}/playlist/${playlist._id}`
                         return (
                             <div key={playlist._id}>
-                                <Link to={playlistUrl} >
-                                    <img src={playlist.image} alt='' height='150' width='150' />
-                                </Link>
-                                <br />
-                                <Link to={playlistUrl} >
-                                    {playlist.title}
-                                </Link>
-                                <button onClick={() => this.deletePlaylist(playlist._id)}>DELETE</button>
+                                {this.state.editPlaylist
+                                    ?
+                                    <div>
+                                        <img src={playlist.image} alt='' height='150' width='150' />
+                                        <form onSubmit={() => this.editPlaylist(playlist._id)}>
+                                            <input
+                                                type="text"
+                                                name='title'
+                                                value={playlist.title}
+                                                onChange={(event) => this.handleChange(event, playlist._id)}
+                                            />
+                                            <button type='submit'>UPDATE</button>
+                                        </form>
+                                    </div>
+                                    :
+                                    <div>
+                                        <Link to={playlistUrl} >
+                                            <img src={playlist.image} alt='' height='150' width='150' />
+                                        </Link>
+                                        <br />
+                                        <Link to={playlistUrl} >
+                                            {playlist.title}
+                                        </Link>
+                                        <button onClick={() => this.deletePlaylist(playlist._id)}>DELETE</button>
+                                        <button onClick={() => this.toggleEdit()}>EDIT</button>
+                                    </div>
+                                }
                             </div>
                         )
                     })}
