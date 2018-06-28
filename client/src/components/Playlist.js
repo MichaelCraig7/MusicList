@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -6,10 +7,10 @@ import axios from 'axios'
 class Playlist extends Component {
 
     state = {
-        data: {},
-        user: '',
+        user: {},
+        songs: [],
         playlists: [],
-        query: '',
+        query: ''
     }
 
     onSubmitQuery(e) {
@@ -18,52 +19,104 @@ class Playlist extends Component {
         })
     }
 
-    populateState() {
+    getData() {
         const userId = this.props.match.params.userId
-        axios.get(`/api/users/${userId}`).then((res) => {
-            return (
-                this.setState({
-                    user: res.data.showUser.username,
-                    data: res.data,
-                }))
+        axios.get(`/api/users/${userId}`).then(res => {
+            this.setState({
+                user: res.data.showUser,
+                playlists: res.data.showUser.playlists
+            })
         })
     }
 
-    getPlaylists() {
+    getSongs() {
         const userId = this.props.match.params.userId
-        axios.get(`/api/users/${userId}/playlists`).then((res) => {
-            return (
+        const playlistId = this.props.match.params.playlistId
+        axios.get(`/api/users/${userId}/playlists/${playlistId}`)
+        .then(res => {
+            console.log(res.data.playlist)
                 this.setState({
-                    playlists: res.data.playlists,
-                    title: res.data.playlists[0].title
-                }))
-        })
+                    songs: res.data.playlist.songs
+                })
+            })
+    }
+
+    deletePlaylist = (playlistId) => {
+        const userId = this.props.match.params.userId
+        axios.delete(`/api/users/${userId}/playlists/${playlistId}`)
+            .then(() => {
+                return axios.get(`/api/users/${userId}`)
+                    .then(res => {
+                        this.setState({
+                            user: res.data.showUser,
+                            playlists: res.data.showUser.playlists
+                        })
+                    })
+            })
+    }
+
+    deleteSong = (songId) => {
+        const userId = this.props.match.params.userId
+        const playlistId = this.props.match.params.playlistId
+        axios.delete(`/api/users/${userId}/playlists/${playlistId}/songs/${songId}`)
+            .then(() => {
+                return axios.get(`/api/users/${userId}`)
+                    .then(res => {
+                        this.setState({
+                            user: res.data.showUser,
+                            playlists: res.data.showUser.playlists
+                        })
+                    })
+            })
     }
 
     componentDidMount() {
-        this.populateState()
+        this.getData()
+        this.getSongs()
     }
 
     render() {
-        if (this.state.data.showUser === undefined) {
-            return null
+
+        if (!this.state.user._id) {
+            return 'Loading'
         }
 
-        console.log(this.state.data.showUser.playlists[0].image)
-        console.log(this)
-
-
-        const user = this.state.user
-        const userImage = this.state.data.showUser.userImage
-        // const playlistImage = 
+        const username = this.state.user.username || ''
+        const user = this.state.user || {}
         const userId = this.props.match.params.userId
+        const userImage = this.state.user.userImage || ''
         const userNameUrl = `/user/${userId}`
+        const playlists = this.state.playlists
+        const songs = this.state.songs || []
+        console.log(this.state.songs)
 
         return (
             <div>
-                {/* <Link to={userNameUrl}><img src={userImage} alt='' height='50' width='50' />{user}</Link> */}
-                {/* <img src={} /> */}
-                <h1>Playlist Page</h1>
+                <Link to={userNameUrl}>
+                    <img src={userImage} alt='' height='50' width='50' />{username}
+                </Link>
+                <form onSubmit={this.onSubmitQuery}>
+                    <input type='text' placeholder='Search' />
+                    <input type='submit' value='Search' />
+                </form>
+                <div>
+                    {songs.map(song => {
+                        const songTitle = song.title
+                        const songArtist = song.artist
+                        const songAlbum = song.album
+                        console.log(song._id)
+                        return (
+                            <div key={song._id}>
+                                <img src={song.albumImage} alt='' height='200'/>
+                                <p>Title: {songTitle}</p>
+                                <p>Artist: {songArtist}</p>
+                                <p>Album: {songAlbum}</p>
+                                <button onClick={() => this.deleteSong(song._id)}>DELETE</button>
+                                <hr/>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         );
     }

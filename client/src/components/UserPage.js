@@ -88,7 +88,6 @@ class UserPage extends Component {
                     <input type='text' placeholder='Search' />
                     <input type='submit' value='Search' />
                 </form>
-
                 <h1><img src={userImage} alt='' height='50' width='50' />{user.username}</h1>
                 <br />
                 <br />
