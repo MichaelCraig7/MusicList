@@ -12,13 +12,27 @@ class Playlist extends Component {
         songs: [],
         playlists: [],
         query: '',
-        musiXMatch: []
+        musiXMatch: [],
+        url: '',
+        searchResults: {},
+        showHide: false
     }
 
+    handleSearchInput = (e) => {
+        const searchResults = { ...this.state.searchResults }
+        const inputName = e.target.name
+        const userInput = e.target.value
+        console.log("what is this?", this);
 
-    onSubmitQuery(e) {
+        searchResults[inputName] = userInput
         this.setState({
-            query: e.target.value
+            searchResults
+        })
+    }
+
+    handleSubmit = (e) => {
+        axios.post('/api/index/musix', this.state.searchResults).then((res) => {
+            console.log(res);
         })
     }
 
@@ -67,20 +81,26 @@ class Playlist extends Component {
             })
     }
 
+    getSongsFromAPI = () => {
+        axios.get('/api/index/musix')
+            .then(res => {
+                // req.query.search = this.state.searchResults.query
+                console.log('getSongsFromAPI', this.state.searchResults.query)
+                this.setState({
+                    musiXMatch: res.data.data.message.body.track_list
+                })
+            })
+    }
+
     componentDidMount() {
-        axios.get('http://api.musixmatch.com/ws/1.1/track.search?apikey=7b7aa74dbe9515ecbe0deae7a9575a78&q_track=Dire%20straits%20Sultans%20of%20Swing&page_size=10').then(res => {
-            console.log(res.data)
-            this.setState({ musiXMatch: res.data })
-        })
         this.getData()
         this.getSongs()
     }
 
-    // componentDidMount() {
-    //     this.getData()
-    //     this.getSongs()
-    //     // this.setState(this.getData, this.getSongs)
-    // }
+    buttonFunctionCalls = () => {
+        this.handleSubmit()
+        this.getSongsFromAPI()
+    }
 
     render() {
 
@@ -94,36 +114,68 @@ class Playlist extends Component {
         const userNameUrl = `/user/${userId}`
         const songs = this.state.songs || []
         const playlistTitle = this.state.playlistTitle
-        console.log(this.state)
+        const musiXMatch = this.state.musiXMatch
+        // console.log(this.state)
 
         return (
             <div>
+
                 <Link to={userNameUrl}>
                     <img src={userImage} alt='' height='50' width='50' />{username}
                 </Link>
-                <form onSubmit={this.onSubmitQuery}>
-                    <input type='text' placeholder='Search' />
-                    <input type='submit' value='Search' />
-                </form>
-                <h4>Playlist</h4>
-                <h1>{playlistTitle}</h1>
+
                 <div>
-                    {songs.map(song => {
-                        const songTitle = song.title
-                        const songArtist = song.artist
-                        const songAlbum = song.album
-                        return (
-                            <div key={song._id}>
-                                <img src={song.albumImage} alt='' height='200' />
-                                <p>Title: {songTitle}</p>
-                                <p>Artist: {songArtist}</p>
-                                <p>Album: {songAlbum}</p>
-                                <button onClick={() => this.deleteSong(song._id)}>DELETE</button>
-                                <hr />
-                            </div>
-                        )
-                    })}
+                    <input
+                        type='text'
+                        name='query'
+                        placeholder='Search'
+                        onChange={this.handleSearchInput}
+                    />
+                    <button onClick={this.buttonFunctionCalls}>Submit</button>
                 </div>
+
+                <div>
+                    {this.state.showHide
+
+                        ?
+
+                        <div>
+                            {musiXMatch.map(results => {
+                                console.log(results);
+                                const trackName = results.track.track_name
+                                return (
+                                    <div>
+                                        <p>{trackName}</p>
+                                    </div>
+                                )
+                            })}
+                        </div>
+
+                        :
+
+                        <div>
+                            <h4>Playlist</h4>
+                            <h1>{playlistTitle}</h1>
+
+                            {songs.map(song => {
+                                const songTitle = song.title
+                                const songArtist = song.artist
+                                const songAlbum = song.album
+                                return (
+                                    <div key={song._id}>
+                                        <img src={song.albumImage} alt='' height='200' />
+                                        <p>Title: {songTitle}</p>
+                                        <p>Artist: {songArtist}</p>
+                                        <p>Album: {songAlbum}</p>
+                                        <button onClick={() => this.deleteSong(song._id)}>DELETE</button>
+                                        <hr />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    }
+                </div>
+
             </div >
         );
     }

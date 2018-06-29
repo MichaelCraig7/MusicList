@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 
+
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI); //mongodb://localhost/idea-board
@@ -37,8 +38,9 @@ app.use('/api/users/:userId/playlists', playlistsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/index', indexRouter);
 
-app.get('/*', (req,res) => {
+app.get('/*', (req, res) => {
   res.sendFile(__dirname + '/client/build/index.html')
 })
+
 
 module.exports = app;
