@@ -11,8 +11,10 @@ class Playlist extends Component {
         playlistTitle: '',
         songs: [],
         playlists: [],
-        query: ''
+        query: '',
+        musiXMatch: []
     }
+
 
     onSubmitQuery(e) {
         this.setState({
@@ -29,15 +31,15 @@ class Playlist extends Component {
             })
         })
     }
-    
+
     getSongs() {
         const userId = this.props.match.params.userId
         const playlistId = this.props.match.params.playlistId
         axios.get(`/api/users/${userId}/playlists/${playlistId}`)
-        .then(res => {
-            this.setState({
-                songs: res.data.playlist.songs,
-                playlistTitle: res.data.playlist.title
+            .then(res => {
+                this.setState({
+                    songs: res.data.playlist.songs,
+                    playlistTitle: res.data.playlist.title
                 })
             })
     }
@@ -51,7 +53,8 @@ class Playlist extends Component {
                     .then(res => {
                         this.setState({
                             user: res.data.showUser,
-                            playlists: res.data.showUser.playlists                     })
+                            playlists: res.data.showUser.playlists
+                        })
                     })
             })
             .then(() => {
@@ -65,10 +68,19 @@ class Playlist extends Component {
     }
 
     componentDidMount() {
+        axios.get('http://api.musixmatch.com/ws/1.1/track.search?apikey=7b7aa74dbe9515ecbe0deae7a9575a78&q_track=Dire%20straits%20Sultans%20of%20Swing&page_size=10').then(res => {
+            console.log(res.data)
+            this.setState({ musiXMatch: res.data })
+        })
         this.getData()
         this.getSongs()
-        // this.setState(this.getData, this.getSongs)
     }
+
+    // componentDidMount() {
+    //     this.getData()
+    //     this.getSongs()
+    //     // this.setState(this.getData, this.getSongs)
+    // }
 
     render() {
 

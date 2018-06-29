@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+// Key: 7b7aa74dbe9515ecbe0deae7a9575a78
 
 const UserPageStyles = styled.div`
     a {
@@ -30,10 +31,10 @@ class UserPage extends Component {
     handleChange = (event, playlistId) => {
         const playlistArray = [...this.state.playlists]
         console.log(playlistId);
-        
+
         const editedPlaylist = playlistArray.find(playlist => playlist._id === playlistId)
         console.log(editedPlaylist);
-        
+
         const inputName = event.target.name
         const userInput = event.target.value
         editedPlaylist[inputName] = userInput
@@ -83,6 +84,18 @@ class UserPage extends Component {
         })
     }
 
+    deleteUser = () => {
+        const userId = this.props.match.params.userId
+        console.log(userId);
+        
+        axios.delete(`/api/users/${userId}`)
+            .then(() => {
+                return (
+                    this.props.history.push(`/login`)
+                )
+            })
+    }
+
     deletePlaylist = (playlistId) => {
         const userId = this.props.match.params.userId
         axios.delete(`/api/users/${userId}/playlists/${playlistId}`)
@@ -102,6 +115,7 @@ class UserPage extends Component {
     }
 
     render() {
+        console.log(this.props.history);
 
         if (!this.state.user._id) {
             return 'Loading'
@@ -117,9 +131,13 @@ class UserPage extends Component {
 
         return (
             <UserPageStyles>
-                <Link to={userNameUrl}>
-                    <img src={userImage} alt='' height='50' width='50' />{username}
-                </Link>
+                <div>
+                    <Link to={userNameUrl}>
+                        <img src={userImage} alt='' height='50' width='50' />{username}
+                    </Link>
+                    <button onClick={this.deleteUser}>X</button>
+
+                </div>
                 <form onSubmit={this.onSubmitQuery}>
                     <input type='text' placeholder='Search' />
                     <input type='submit' value='Search' />
