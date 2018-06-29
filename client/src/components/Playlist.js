@@ -18,11 +18,18 @@ class Playlist extends Component {
         showHide: false
     }
 
+    showHide() {
+        const editPlaylist = !this.state.showHide
+        this.setState({
+            editPlaylist
+        })
+    }
+
     handleSearchInput = (e) => {
         const searchResults = { ...this.state.searchResults }
         const inputName = e.target.name
         const userInput = e.target.value
-        console.log("what is this?", this);
+        console.log("User Input", this);
 
         searchResults[inputName] = userInput
         this.setState({
@@ -31,9 +38,9 @@ class Playlist extends Component {
     }
 
     handleSubmit = (e) => {
-        axios.post('/api/index/musix', this.state.searchResults).then((res) => {
-            console.log(res);
-        })
+        // axios.post(`/api/index/musix`, this.state.searchResults).then((res) => {
+        //     console.log(res);
+        // })
     }
 
     getData() {
@@ -82,14 +89,34 @@ class Playlist extends Component {
     }
 
     getSongsFromAPI = () => {
-        axios.get('/api/index/musix')
+        const userId = this.props.match.params.userId
+        const playlistId = this.props.match.params.playlistId        
+        axios.get(`/api/users/${userId}/playlists/${playlistId}/songs?search=${this.state.searchResults.query}`)
             .then(res => {
-                // req.query.search = this.state.searchResults.query
                 console.log('getSongsFromAPI', this.state.searchResults.query)
+                console.log('getSongsFromAPI', res)
                 this.setState({
                     musiXMatch: res.data.data.message.body.track_list
                 })
             })
+            // .then(() => {
+            //     this.showHide()
+            // })
+    }
+
+    addSongToPlaylist = () => {
+        const userId = this.props.match.params.userId
+        const playlistId = this.props.match.params.playlistId
+        console.log(this.state.songs)
+        axios.post(`/api/users/${userId}/playlists/${playlistId}/songs`).then(() => {
+            return axios.get(`/api/users/${userId}/playlists/${playlistId}/songs?search=${this.state.searchResults.query}`)
+            .then(res => {
+                console.log(res)
+                    this.setState({
+                        playlists: res.data.data.message.body.track_list
+                    })
+                })
+        })
     }
 
     componentDidMount() {
@@ -115,7 +142,6 @@ class Playlist extends Component {
         const songs = this.state.songs || []
         const playlistTitle = this.state.playlistTitle
         const musiXMatch = this.state.musiXMatch
-        // console.log(this.state)
 
         return (
             <div>
@@ -135,45 +161,54 @@ class Playlist extends Component {
                 </div>
 
                 <div>
-                    {this.state.showHide
+                    {/* {this.state.getSongsFromAPI */}
 
-                        ?
+                    {/* ? */}
 
-                        <div>
-                            {musiXMatch.map(results => {
-                                console.log(results);
-                                const trackName = results.track.track_name
-                                return (
-                                    <div>
-                                        <p>{trackName}</p>
-                                    </div>
-                                )
-                            })}
-                        </div>
+                    <div>
+                        {musiXMatch.map((results, i) => {
+                            console.log(results);
+                            const trackName = results.track.track_name
+                            const artistName = results.track.artist_name
+                            const albumArt = results.track.album_coverart_100x100
+                            const albumTitle = results.track.album_name
+                            return (
+                                <div key={i}>
+                                    <br />
+                                    <img src={albumArt} alt='' />
+                                    <h3>Song title: {trackName}</h3>
+                                    <p>Artist: {artistName}</p>
+                                    <p>Album: {albumTitle}</p>
+                                    <button onClick={this.addSongToPlaylist}>Add to Playlist</button>
+                                    <hr />
+                                </div>
+                            )
+                        })}
+                    </div>
 
-                        :
+                    {/* : */}
 
-                        <div>
-                            <h4>Playlist</h4>
-                            <h1>{playlistTitle}</h1>
+                    <div>
+                        <h4>Playlist</h4>
+                        <h1>{playlistTitle}</h1>
 
-                            {songs.map(song => {
-                                const songTitle = song.title
-                                const songArtist = song.artist
-                                const songAlbum = song.album
-                                return (
-                                    <div key={song._id}>
-                                        <img src={song.albumImage} alt='' height='200' />
-                                        <p>Title: {songTitle}</p>
-                                        <p>Artist: {songArtist}</p>
-                                        <p>Album: {songAlbum}</p>
-                                        <button onClick={() => this.deleteSong(song._id)}>DELETE</button>
-                                        <hr />
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    }
+                        {songs.map(song => {
+                            const songTitle = song.title
+                            const songArtist = song.artist
+                            const songAlbum = song.album
+                            return (
+                                <div key={song._id}>
+                                    <img src={song.albumImage} alt='' height='200' />
+                                    <p>Title: {songTitle}</p>
+                                    <p>Artist: {songArtist}</p>
+                                    <p>Album: {songAlbum}</p>
+                                    <button onClick={() => this.deleteSong(song._id)}>DELETE</button>
+                                    <hr />
+                                </div>
+                            )
+                        })}
+                    </div>
+                    {/* } */}
                 </div>
 
             </div >
