@@ -104,11 +104,11 @@ class Playlist extends Component {
             // })
     }
 
-    addSongToPlaylist = () => {
+    addSongToPlaylist = (songInfo) => {
         const userId = this.props.match.params.userId
         const playlistId = this.props.match.params.playlistId
         console.log(this.state.songs)
-        axios.post(`/api/users/${userId}/playlists/${playlistId}/songs`).then(() => {
+        axios.post(`/api/users/${userId}/playlists/${playlistId}/songs`, songInfo).then(() => {
             return axios.get(`/api/users/${userId}/playlists/${playlistId}/songs?search=${this.state.searchResults.query}`)
             .then(res => {
                 console.log(res)
@@ -172,14 +172,20 @@ class Playlist extends Component {
                             const artistName = results.track.artist_name
                             const albumArt = results.track.album_coverart_100x100
                             const albumTitle = results.track.album_name
+                            const newSong = {
+                                image: albumArt,
+                                title: trackName,
+                                artist: artistName,
+                                album: albumTitle
+                            }
                             return (
                                 <div key={i}>
                                     <br />
                                     <img src={albumArt} alt='' />
-                                    <h3>Song title: {trackName}</h3>
+                                    <h3>Title: {trackName}</h3>
                                     <p>Artist: {artistName}</p>
                                     <p>Album: {albumTitle}</p>
-                                    <button onClick={this.addSongToPlaylist}>Add to Playlist</button>
+                                    <button onClick={() => this.addSongToPlaylist(newSong)}>Add to Playlist</button>
                                     <hr />
                                 </div>
                             )
@@ -198,7 +204,7 @@ class Playlist extends Component {
                             const songAlbum = song.album
                             return (
                                 <div key={song._id}>
-                                    <img src={song.albumImage} alt='' height='200' />
+                                    <img src={song.albumImage} alt=''  />
                                     <p>Title: {songTitle}</p>
                                     <p>Artist: {songArtist}</p>
                                     <p>Album: {songAlbum}</p>

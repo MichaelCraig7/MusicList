@@ -27,10 +27,16 @@ const PlaylistSchema = new Schema({
         type: String,
         default: 'My Playlist'
 	},
+    artist: {
+        type: String,
+	},
 	image: {
         type: String,
         default: 'https://picsum.photos/200/300/?random'
-	},
+    },
+    album: {
+        type: String,
+    },
     dateCreated: Date,
     songs: [ SongSchema ]
 })	
