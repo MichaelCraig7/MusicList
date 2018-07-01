@@ -2,14 +2,85 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+
 
 // Key: 7b7aa74dbe9515ecbe0deae7a9575a78
 
-const UserPageStyles = styled.div`
+// const UserPageStyles = styled.div`
+//     a {
+//         text-decoration: none;
+//         color: white
+//     }
+// `
+
+const UserNameTop = styled.div`
+    text-align: right;
+    padding: 10px 10px 0 0; 
+    a {
+        vertical-align: 20px;
+        text-decoration: none;
+        color: white;
+        font-size: 20px;
+        padding-right: 7px;
+    }
+    img {
+        vertical-align: -30%;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        padding-right: 7px;
+    }
+    button {
+        vertical-align: 20px;
+    }
+    .trash {
+        color: grey;
+    }
+`
+
+const UserNameMiddle = styled.div`
+    margin-bottom: 7.5%;
+    img {
+        border-radius: 50%;
+        vertical-align: -10px;
+        padding-right: 15px;
+        height: 4em;
+        width: 4em;
+    }
+    h1 {
+        vertical-align: 40px;
+        font-size: 4em;
+    }
+`
+
+const PlaylistHeading = styled.div`
+    display: inline;
+    font-size: 3em;
+    border-bottom: 1px solid white;
+    a {
+        padding-left: 10px;
+        font-size: .4em;
+        vertical-align:40%;
+        color: grey;
+    }
+`
+
+const GeneralWrapper = styled.div`
     a {
         text-decoration: none;
-        color: white
+        color: white;
     }
+    img {
+        height: 12em;
+        width: 12em;
+    }
+`
+
+const PlaylistList = styled.div`
+    float: left;
 `
 
 class UserPage extends Component {
@@ -87,7 +158,7 @@ class UserPage extends Component {
     deleteUser = () => {
         const userId = this.props.match.params.userId
         console.log(userId);
-        
+
         axios.delete(`/api/users/${userId}`)
             .then(() => {
                 return (
@@ -130,27 +201,25 @@ class UserPage extends Component {
         console.log(playlists)
 
         return (
-            <UserPageStyles>
-                <div>
+            <div>
+                <UserNameTop>
                     <Link to={userNameUrl}>
-                        <img src={userImage} alt='' height='50' width='50' />{username}
+                        <img src={userImage} alt='' />{username}
                     </Link>
-                    <button onClick={this.deleteUser}>X</button>
+                    <a className='trash' onClick={this.deleteUser}><FontAwesomeIcon icon="trash" /></a>
+                </UserNameTop>
 
-                </div>
-                <form onSubmit={this.onSubmitQuery}>
-                    <input type='text' placeholder='Search' />
-                    <input type='submit' value='Search' />
-                </form>
-                <h1><img src={userImage} alt='' height='50' width='50' />{user.username}</h1>
-                <br />
-                <br />
-                <br />
-                <br />
-                <hr />
-                <h1>Playlists</h1>
-                <button onClick={this.newPlaylist}>New Playlist</button>
-                <div>
+                <UserNameMiddle>
+                    <h1><img src={userImage} alt='' height='50' width='50' />{user.username}</h1>
+                </UserNameMiddle>
+
+                <PlaylistHeading>
+                    <div>Playlists
+                        <a onClick={this.newPlaylist}><FontAwesomeIcon icon="plus" /></a>
+                    </div>
+                </PlaylistHeading>
+
+                <GeneralWrapper>
                     {playlists.map(playlist => {
                         const playlistUrl = `/user/${userId}/playlist/${playlist._id}`
                         return (
@@ -166,11 +235,11 @@ class UserPage extends Component {
                                                 value={playlist.title}
                                                 onChange={(event) => this.handleChange(event, playlist._id)}
                                             />
-                                            <button type='submit'>UPDATE</button>
+                                            <a type='submit'><FontAwesomeIcon icon="plus" /></a>
                                         </form>
                                     </div>
                                     :
-                                    <div>
+                                    <PlaylistList>
                                         <Link to={playlistUrl} >
                                             <img src={playlist.image} alt='' height='150' width='150' />
                                         </Link>
@@ -178,15 +247,15 @@ class UserPage extends Component {
                                         <Link to={playlistUrl} >
                                             {playlist.title}
                                         </Link>
-                                        <button onClick={() => this.deletePlaylist(playlist._id)}>DELETE</button>
-                                        <button onClick={() => this.toggleEdit()}>EDIT</button>
-                                    </div>
+                                        <a onClick={() => this.toggleEdit()}><FontAwesomeIcon icon="pencil-alt" /></a>
+                                        <a onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon icon="times-circle" /></a>
+                                    </PlaylistList>
                                 }
                             </div>
                         )
                     })}
-                </div>
-            </UserPageStyles >
+                </GeneralWrapper>
+            </div >
         );
     }
 }

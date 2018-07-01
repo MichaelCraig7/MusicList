@@ -7,13 +7,16 @@ import UserPage from './components/UserPage'
 import SearchResults from './components/SearchResults'
 import Playlist from './components/Playlist'
 import styled from 'styled-components'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStroopwafel, faTrash, faPlus, faTimesCircle, faPencilAlt} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faStroopwafel, faTrash, faPlus, faTimesCircle, faPencilAlt)
 
 
 const AppStyles = styled.div`
   color: white;
   margin: 0;
-  background-color: #252121;
-  height: 100vh;
   h1 {
     margin: 0;
   }
