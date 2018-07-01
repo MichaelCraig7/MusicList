@@ -51,7 +51,7 @@ const UserSchema = new Schema({
     },
     userImage: {
         type: String,
-        default: 'https://picsum.photos/200/300/?random'
+        default: 'http://placekitten.com/200/300'
     },
     playlists: [ PlaylistSchema ]
 })

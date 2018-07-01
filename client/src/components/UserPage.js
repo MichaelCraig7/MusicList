@@ -59,7 +59,10 @@ const UserNameMiddle = styled.div`
 const PlaylistHeading = styled.div`
     display: inline;
     font-size: 3em;
-    border-bottom: 1px solid white;
+    div {
+        border-bottom: 2px solid white;
+        padding-bottom: 2.5%;
+    }
     a {
         padding-left: 10px;
         font-size: .4em;
@@ -69,13 +72,15 @@ const PlaylistHeading = styled.div`
 `
 
 const GeneralWrapper = styled.div`
+        padding: 2.5%;
     a {
         text-decoration: none;
         color: white;
     }
     img {
-        height: 12em;
-        width: 12em;
+        height: 16em;
+        width: 16em;
+        margin-right: 10px;
     }
 `
 
@@ -210,7 +215,7 @@ class UserPage extends Component {
                 </UserNameTop>
 
                 <UserNameMiddle>
-                    <h1><img src={userImage} alt='' height='50' width='50' />{user.username}</h1>
+                    <h1><img src={userImage} alt=''/>{user.username}</h1>
                 </UserNameMiddle>
 
                 <PlaylistHeading>
@@ -227,7 +232,7 @@ class UserPage extends Component {
                                 {this.state.editPlaylist
                                     ?
                                     <div>
-                                        <img src={playlist.image} alt='' height='150' width='150' />
+                                        <img src={playlist.image} alt=''/>
                                         <form onSubmit={() => this.editPlaylist(playlist._id)}>
                                             <input
                                                 type="text"
@@ -241,7 +246,7 @@ class UserPage extends Component {
                                     :
                                     <PlaylistList>
                                         <Link to={playlistUrl} >
-                                            <img src={playlist.image} alt='' height='150' width='150' />
+                                            <img src={playlist.image} alt=''/>
                                         </Link>
                                         <br />
                                         <Link to={playlistUrl} >
