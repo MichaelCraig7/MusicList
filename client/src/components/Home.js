@@ -6,8 +6,9 @@ import Login from './Login';
 const HomeStyles = styled.div`
     text-align: center;
     margin: 40% 0 60% 0;
+    font-family: ironMaiden;
     h1 {
-        font-family: If;
+        color: #1cd860;
         font-size: 3em;
         margin-bottom: 50px;
     }
