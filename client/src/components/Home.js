@@ -5,17 +5,28 @@ import Login from './Login';
 
 const HomeStyles = styled.div`
     text-align: center;
-    margin: 40% 0 60% 0;
-    font-family: ironMaiden;
+    margin: 20% 0 20% 0;
     h1 {
-        color: #1cd860;
-        font-size: 3em;
-        margin-bottom: 50px;
+        font-family: ironMaiden;
+        color: #aaffff;
+        font-size: 8em;
+        text-shadow:    
+            -2px -2px 0 #000,  
+            3px -3px 0 #000,
+            -3px 3px 0 #000,
+            3px 3px 0 #000;
     }
     a {
+        color: #aaffff;
+        font-family: 'Arial';
+        margin: 30% 0 30% 0;
         text-decoration: none;
-        color: #1cd860;
         font-size: 2em;
+        text-shadow:    
+            1px 1px 0 #000,  
+        1px 1px 0 #000,
+            1px 1px 0 #000,
+        1px 1px 0 #000;
     }
 
 `
@@ -27,8 +38,8 @@ class Home extends Component {
         return (
             <HomeStyles>
                 <h1>Music List</h1>
-                <img src="http://www.iosicongallery.com/img/1024/spotify-music-2015-07-30.png" alt='' height="300" />
-                <br/>
+                <img src="/Users/michaelcraig/Documents/Project_3/MusicList/client/src/WDIProject3.psd" alt=''/>
+                <br />
                 <Link to="/login">ENTER</Link>
                 <Router>
                     <Switch>

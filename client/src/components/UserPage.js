@@ -4,17 +4,16 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+const UserPageStyles = styled.div`
+    background: none;
+    background: linear-gradient(rgb(52, 52, 52), rgb(7, 7, 7));
+    background-size: cover;
 
-
-
-// Key: 7b7aa74dbe9515ecbe0deae7a9575a78
-
-// const UserPageStyles = styled.div`
-//     a {
-//         text-decoration: none;
-//         color: white
-//     }
-// `
+    a {
+        text-decoration: none;
+        color: white
+    }
+`
 
 const UserNameTop = styled.div`
     text-align: right;
@@ -219,7 +218,7 @@ class UserPage extends Component {
         console.log(playlists)
 
         return (
-            <div>
+            <UserPageStyles>
                 <UserNameTop>
                     <Link to={userNameUrl}>
                         <img src={userImage} alt='' />{username}
@@ -276,7 +275,7 @@ class UserPage extends Component {
                         )
                     })}
                 </GeneralWrapper>
-            </div >
+            </UserPageStyles >
         );
     }
 }

@@ -1,10 +1,6 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background: linear-gradient(rgb(52, 52, 52), rgb(7, 7, 7));
-  margin: 0 7.5%;
-  height: 100vh;
+  /* background: linear-gradient(rgb(52, 52, 52), rgb(7, 7, 7)); */
+  background: url('https://images.unsplash.com/photo-1507245921392-e902673ca772?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d2f3f300e060a8304aee29314302f8af&auto=format&fit=crop&w=2700&q=80') no-repeat center center fixed;
 
 
 }
