@@ -31,7 +31,7 @@ const UserNameTop = styled.div`
         border-radius: 50%;
         height: 30px;
         width: 30px;
-        padding-right: 7px;
+        margin-right: 7px;
     }
     button {
         vertical-align: 20px;
@@ -43,15 +43,16 @@ const UserNameTop = styled.div`
 
 const UserNameMiddle = styled.div`
     margin-bottom: 7.5%;
+    display: flex;
     img {
         border-radius: 50%;
         vertical-align: -10px;
-        padding-right: 15px;
-        height: 4em;
-        width: 4em;
+        margin-right: 15px;
+        height: 250px;
+        width: 250px;
     }
     h1 {
-        vertical-align: 40px;
+        vertical-align: -20px;
         font-size: 4em;
     }
 `
@@ -73,19 +74,31 @@ const PlaylistHeading = styled.div`
 
 const GeneralWrapper = styled.div`
         padding: 2.5%;
-    a {
-        text-decoration: none;
-        color: white;
-    }
-    img {
-        height: 16em;
-        width: 16em;
-        margin-right: 10px;
+        a {
+            text-decoration: none;
+            color: white;
+            margin: 0px 20px 30px 20px;
+            align-self: center;
+        }
+        img {
+            height: 16em;
+            width: 16em;
+            margin: 30px 20px 0px 20px;
     }
 `
 
 const PlaylistList = styled.div`
     float: left;
+    div {
+        margin: 0px 20px 0px 20px;
+    }
+    .icons{
+
+    }
+`
+
+const PlaylistEdit = styled.div`
+    align-self: center;
 `
 
 class UserPage extends Component {
@@ -215,7 +228,8 @@ class UserPage extends Component {
                 </UserNameTop>
 
                 <UserNameMiddle>
-                    <h1><img src={userImage} alt=''/>{user.username}</h1>
+                    <img src={userImage} alt='' />
+                    <h1>{user.username}</h1>
                 </UserNameMiddle>
 
                 <PlaylistHeading>
@@ -231,8 +245,8 @@ class UserPage extends Component {
                             <div key={playlist._id}>
                                 {this.state.editPlaylist
                                     ?
-                                    <div>
-                                        <img src={playlist.image} alt=''/>
+                                    <PlaylistEdit>
+                                        <img src={playlist.image} alt='' />
                                         <form onSubmit={() => this.editPlaylist(playlist._id)}>
                                             <input
                                                 type="text"
@@ -242,18 +256,20 @@ class UserPage extends Component {
                                             />
                                             <a type='submit'><FontAwesomeIcon icon="plus" /></a>
                                         </form>
-                                    </div>
+                                    </PlaylistEdit>
                                     :
                                     <PlaylistList>
                                         <Link to={playlistUrl} >
-                                            <img src={playlist.image} alt=''/>
+                                            <img src={playlist.image} alt='' />
                                         </Link>
                                         <br />
-                                        <Link to={playlistUrl} >
-                                            {playlist.title}
-                                        </Link>
-                                        <a onClick={() => this.toggleEdit()}><FontAwesomeIcon icon="pencil-alt" /></a>
-                                        <a onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon icon="times-circle" /></a>
+                                        <div>
+                                            <Link to={playlistUrl} >
+                                                {playlist.title}
+                                            </Link>
+                                            <a className='icons' onClick={() => this.toggleEdit()}><FontAwesomeIcon icon="pencil-alt" /></a>
+                                            <a className='icons' onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon icon="times-circle" /></a>
+                                        </div>
                                     </PlaylistList>
                                 }
                             </div>
