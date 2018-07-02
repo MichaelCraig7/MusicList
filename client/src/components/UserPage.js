@@ -5,10 +5,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const UserPageStyles = styled.div`
-    background: none;
-    background: linear-gradient(rgb(52, 52, 52), rgb(7, 7, 7));
-    background-size: cover;
-
+    margin: 1% 7.5% 1% 7.5%;
     a {
         text-decoration: none;
         color: white
@@ -80,8 +77,9 @@ const GeneralWrapper = styled.div`
             align-self: center;
         }
         img {
-            height: 16em;
-            width: 16em;
+            align-self: center;
+            height: 15em;
+            width: 15em;
             margin: 30px 20px 0px 20px;
     }
 `
@@ -89,7 +87,6 @@ const GeneralWrapper = styled.div`
 const PlaylistList = styled.div`
     float: left;
     div {
-        margin: 0px 20px 0px 20px;
     }
     .icons{
 
@@ -223,7 +220,7 @@ class UserPage extends Component {
                     <Link to={userNameUrl}>
                         <img src={userImage} alt='' />{username}
                     </Link>
-                    <a className='trash' onClick={this.deleteUser}><FontAwesomeIcon icon="trash" /></a>
+                    <a className='trash' onClick={this.deleteUser}><FontAwesomeIcon icon="trash"/></a>
                 </UserNameTop>
 
                 <UserNameMiddle>
