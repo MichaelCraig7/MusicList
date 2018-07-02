@@ -4,6 +4,25 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+const PlaylistPage = styled.div`
+        margin: 1% 7.5% 1% 7.5%;
+        font-family: Arial;
+
+`
+
+const SearchBarStyles = styled.div`
+    button {
+        vertical-align: 20px;
+        background: white;
+        border: none;
+        color: grey;
+    }
+    input {
+        text-align: left;
+        opacity: 0.45;
+        border: none:
+    }
+`
 
 const UserNameTop = styled.div`
     text-align: right;
@@ -22,9 +41,7 @@ const UserNameTop = styled.div`
         width: 30px;
         margin-right: 7px;
     }
-    button {
-        vertical-align: 20px;
-    }
+
     .trash {
         color: grey;
     }
@@ -170,17 +187,19 @@ class Playlist extends Component {
         const musiXMatch = this.state.musiXMatch
 
         return (
-            <div>
+            <PlaylistPage>
 
-                <UserNameTop>
+                <SearchBarStyles>
                     <input
                         type='text'
                         name='query'
                         placeholder='Search'
                         onChange={this.handleSearchInput}
                     />
-                    <button onClick={this.buttonFunctionCalls}>Submit</button>
+                    <button onClick={this.buttonFunctionCalls}><FontAwesomeIcon icon="caret-right" /></button>
+                </SearchBarStyles>
 
+                <UserNameTop>
                     <Link to={userNameUrl}>
                         <img src={userImage} alt='' />{username}
                     </Link>
@@ -245,7 +264,7 @@ class Playlist extends Component {
                     {/* } */}
                 </div>
 
-            </div >
+            </PlaylistPage >
         );
     }
 }

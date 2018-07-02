@@ -98,12 +98,17 @@ const GeneralWrapper = styled.div`
 const PlaylistList = styled.div`
     float: left;
     input {
-        text-decoration: none;
-        border-radius: 0;
+        border: none;
         opacity: 0.45;
+        align-items: left;
     }
     button {
-        color: grey;
+        color: white;
+        background: none;
+        border: none;
+        align-content: right;
+        padding: 0;
+        margin-left: 30px;
     }
 `
 
@@ -263,7 +268,7 @@ class UserPage extends Component {
                                                 />
                                                 <a type='submit'></a>
                                                 <button className='playlistInfo' onClick={() => this.toggleEdit()}><FontAwesomeIcon className="editIcon" icon="pencil-alt" /></button>
-                                                <button onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon className='editIcon' icon="trash" /></button>
+                                                <button className='playlistInfo' onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon className='editIcon' icon="trash" /></button>
                                             </form>
                                         </PlaylistList>
                                         :

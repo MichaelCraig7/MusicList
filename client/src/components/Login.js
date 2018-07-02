@@ -17,7 +17,6 @@ const LoginStyles = styled.div`
             3px 3px 0 #000;
     }
     input {
-        text-decoration: none;
         border-radius: 0;
         opacity: 0.45;
         border: none;

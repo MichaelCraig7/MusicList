@@ -8,9 +8,9 @@ import SearchResults from './components/SearchResults'
 import Playlist from './components/Playlist'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faStroopwafel, faTrash, faPlus, faTimesCircle, faPencilAlt} from '@fortawesome/free-solid-svg-icons'
+import { faStroopwafel, faTrash, faPlus, faTimesCircle, faPencilAlt, faCaretRight} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faStroopwafel, faTrash, faPlus, faTimesCircle, faPencilAlt)
+library.add(faStroopwafel, faTrash, faPlus, faTimesCircle, faPencilAlt, faCaretRight)
 
 
 const AppStyles = styled.div`
