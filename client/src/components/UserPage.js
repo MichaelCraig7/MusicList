@@ -17,8 +17,6 @@ const UserPageStyles = styled.div`
         text-decoration: none;
         color: white
     }
-    body {
-    }
 `
 
 const UserNameTop = styled.div`
@@ -99,8 +97,13 @@ const GeneralWrapper = styled.div`
 
 const PlaylistList = styled.div`
     float: left;
-    form {
+    input {
         text-decoration: none;
+        border-radius: 0;
+        opacity: 0.45;
+    }
+    button {
+        color: grey;
     }
 `
 
@@ -259,8 +262,8 @@ class UserPage extends Component {
                                                     onChange={(event) => this.handleChange(event, playlist._id)}
                                                 />
                                                 <a type='submit'></a>
-                                                <a className='playlistInfo' onClick={() => this.toggleEdit()}><FontAwesomeIcon className="editIcon" icon="pencil-alt" /></a>
-                                                <a onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon className='editIcon' icon="trash" /></a>
+                                                <button className='playlistInfo' onClick={() => this.toggleEdit()}><FontAwesomeIcon className="editIcon" icon="pencil-alt" /></button>
+                                                <button onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon className='editIcon' icon="trash" /></button>
                                             </form>
                                         </PlaylistList>
                                         :
