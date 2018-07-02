@@ -8,11 +8,17 @@ Much of my time spent on this project was devoted to finding an API that would p
 
 ## Technologies Used:
 
-  Languages:  JavaScript, HTML, CSS
+  Languages:  
   
-  Frameworks/Libraries: React, Express
+  - JavaScript, HTML, CSS
   
-  Other: Trello, Heroku, Figma, Postman, Compass
+  Frameworks/Libraries: 
+  
+  - React, Express
+  
+  Other: 
+  
+  - Trello, Heroku, Figma, Postman, Compass
 
 
 ## Planning:
