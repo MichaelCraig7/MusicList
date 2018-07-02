@@ -6,6 +6,8 @@ import Login from './Login';
 const HomeStyles = styled.div`
     text-align: center;
     margin: 20% 0 20% 0;
+    background: url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b400f0e9fc87b74d11ab679e48673d9f&auto=format&fit=crop&w=2550&q=80') no-repeat center center fixed;
+
     h1 {
         font-family: ironMaiden;
         color: #aaffff;

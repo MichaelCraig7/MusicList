@@ -8,7 +8,6 @@ import SearchResults from './components/SearchResults'
 import Playlist from './components/Playlist'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStroopwafel, faTrash, faPlus, faTimesCircle, faPencilAlt} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faStroopwafel, faTrash, faPlus, faTimesCircle, faPencilAlt)

@@ -4,11 +4,20 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+const BackgroundStyles = styled.div`
+    /* background: linear-gradient(rgb(52, 52, 52), rgb(7, 7, 7));
+    height: 100vh;
+    width: 100vw; */
+`
+
 const UserPageStyles = styled.div`
     margin: 1% 7.5% 1% 7.5%;
+    font-family: Arial;
     a {
         text-decoration: none;
         color: white
+    }
+    body {
     }
 `
 
@@ -90,10 +99,9 @@ const GeneralWrapper = styled.div`
 
 const PlaylistList = styled.div`
     float: left;
-`
-
-const PlaylistEdit = styled.div`
-    align-self: center;
+    form {
+        text-decoration: none;
+    }
 `
 
 class UserPage extends Component {
@@ -214,64 +222,67 @@ class UserPage extends Component {
         console.log(playlists)
 
         return (
-            <UserPageStyles>
-                <UserNameTop>
-                    <Link to={userNameUrl}>
-                        <img src={userImage} alt='' />{username}
-                    </Link>
-                    <a className='trash' onClick={this.deleteUser}><FontAwesomeIcon icon="trash" /></a>
-                </UserNameTop>
+            <BackgroundStyles>
+                <UserPageStyles>
+                    <UserNameTop>
+                        <Link to={userNameUrl}>
+                            <img src={userImage} alt='' />{username}
+                        </Link>
+                        <a className='trash' onClick={this.deleteUser}><FontAwesomeIcon icon="trash" /></a>
+                    </UserNameTop>
 
-                <UserNameMiddle>
-                    <img src={userImage} alt='' />
-                    <h1>{user.username}</h1>
-                </UserNameMiddle>
+                    <UserNameMiddle>
+                        <img src={userImage} alt='' />
+                        <h1>{user.username}</h1>
+                    </UserNameMiddle>
 
-                <PlaylistHeading>
-                    <div>Playlists
+                    <PlaylistHeading>
+                        <div>Playlists
                         <a onClick={this.newPlaylist}><FontAwesomeIcon icon="plus" /></a>
-                    </div>
-                </PlaylistHeading>
+                        </div>
+                    </PlaylistHeading>
 
-                <GeneralWrapper>
-                    {playlists.map(playlist => {
-                        const playlistUrl = `/user/${userId}/playlist/${playlist._id}`
-                        return (
-                            <div key={playlist._id}>
-                                {this.state.editPlaylist
-                                    ?
-                                    <PlaylistEdit>
-                                        <img src={playlist.image} alt='' />
-                                        <form onSubmit={() => this.editPlaylist(playlist._id)}>
-                                            <input
-                                                type="text"
-                                                name='title'
-                                                value={playlist.title}
-                                                onChange={(event) => this.handleChange(event, playlist._id)}
-                                            />
-                                            <a type='submit'></a>
-                                            <a className='icons' onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon icon="times-circle" /></a>
-                                        </form>
-                                    </PlaylistEdit>
-                                    :
-                                    <PlaylistList>
-                                        <Link to={playlistUrl} >
+                    <GeneralWrapper>
+                        {playlists.map(playlist => {
+                            const playlistUrl = `/user/${userId}/playlist/${playlist._id}`
+                            return (
+                                <div key={playlist._id}>
+                                    {this.state.editPlaylist
+                                        ?
+                                        <PlaylistList>
                                             <img src={playlist.image} alt='' />
-                                        </Link>
-                                        <br />
-                                        <div>
-                                            <Link className='playlistInfo' to={playlistUrl} >
-                                                {playlist.title}
+                                            <form className='playlistInfo'onSubmit={() => this.editPlaylist(playlist._id)}>
+                                                <input
+                                                    type="text"
+                                                    name='title'
+                                                    value={playlist.title}
+                                                    onChange={(event) => this.handleChange(event, playlist._id)}
+                                                />
+                                                <a type='submit'></a>
+                                                <a className='playlistInfo' onClick={() => this.toggleEdit()}><FontAwesomeIcon className="editIcon" icon="pencil-alt" /></a>
+                                                <a onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon className='editIcon' icon="trash" /></a>
+                                            </form>
+                                        </PlaylistList>
+                                        :
+                                        <PlaylistList>
+                                            <Link to={playlistUrl} >
+                                                <img src={playlist.image} alt='' />
                                             </Link>
-                                            <a className='playlistInfo' onClick={() => this.toggleEdit()}><FontAwesomeIcon className="editIcon" icon="pencil-alt" /></a>
-                                        </div>
-                                    </PlaylistList>
-                                }
-                            </div>
-                        )
-                    })}
-                </GeneralWrapper>
-            </UserPageStyles >
+                                            <br />
+                                            <div>
+                                                <Link className='playlistInfo' to={playlistUrl} >
+                                                    {playlist.title}
+                                                </Link>
+                                                <a className='playlistInfo' onClick={() => this.toggleEdit()}><FontAwesomeIcon className="editIcon" icon="pencil-alt" /></a>
+                                            </div>
+                                        </PlaylistList>
+                                    }
+                                </div>
+                            )
+                        })}
+                    </GeneralWrapper>
+                </UserPageStyles >
+            </BackgroundStyles>
         );
     }
 }
