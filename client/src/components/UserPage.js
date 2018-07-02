@@ -70,27 +70,26 @@ const PlaylistHeading = styled.div`
 
 const GeneralWrapper = styled.div`
         padding: 2.5%;
-        a {
-            text-decoration: none;
-            color: white;
-            margin: 0px 20px 30px 20px;
-            align-self: center;
-        }
+        margin: 0;
         img {
             align-self: center;
             height: 15em;
             width: 15em;
             margin: 30px 20px 0px 20px;
-    }
+        }
+        .playlistInfo {
+            text-decoration: none;
+            color: white;
+            margin-left: 20px;
+        }
+        .editIcon {
+            float: right;
+            margin-right: 20px;
+        }
 `
 
 const PlaylistList = styled.div`
     float: left;
-    div {
-    }
-    .icons{
-
-    }
 `
 
 const PlaylistEdit = styled.div`
@@ -220,7 +219,7 @@ class UserPage extends Component {
                     <Link to={userNameUrl}>
                         <img src={userImage} alt='' />{username}
                     </Link>
-                    <a className='trash' onClick={this.deleteUser}><FontAwesomeIcon icon="trash"/></a>
+                    <a className='trash' onClick={this.deleteUser}><FontAwesomeIcon icon="trash" /></a>
                 </UserNameTop>
 
                 <UserNameMiddle>
@@ -250,7 +249,8 @@ class UserPage extends Component {
                                                 value={playlist.title}
                                                 onChange={(event) => this.handleChange(event, playlist._id)}
                                             />
-                                            <a type='submit'><FontAwesomeIcon icon="plus" /></a>
+                                            <a type='submit'></a>
+                                            <a className='icons' onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon icon="times-circle" /></a>
                                         </form>
                                     </PlaylistEdit>
                                     :
@@ -260,11 +260,10 @@ class UserPage extends Component {
                                         </Link>
                                         <br />
                                         <div>
-                                            <Link to={playlistUrl} >
+                                            <Link className='playlistInfo' to={playlistUrl} >
                                                 {playlist.title}
                                             </Link>
-                                            <a className='icons' onClick={() => this.toggleEdit()}><FontAwesomeIcon icon="pencil-alt" /></a>
-                                            <a className='icons' onClick={() => this.deletePlaylist(playlist._id)}><FontAwesomeIcon icon="times-circle" /></a>
+                                            <a className='playlistInfo' onClick={() => this.toggleEdit()}><FontAwesomeIcon className="editIcon" icon="pencil-alt" /></a>
                                         </div>
                                     </PlaylistList>
                                 }

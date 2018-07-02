@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
+const UserNameTop = styled.div`
+    text-align: right;
+    padding: 10px 10px 0 0; 
+    a {
+        vertical-align: 20px;
+        text-decoration: none;
+        color: white;
+        font-size: 20px;
+        padding-right: 7px;
+    }
+    img {
+        vertical-align: -30%;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        margin-right: 7px;
+    }
+    button {
+        vertical-align: 20px;
+    }
+    .trash {
+        color: grey;
+    }
+`
 
 class Playlist extends Component {
 
@@ -90,7 +116,7 @@ class Playlist extends Component {
 
     getSongsFromAPI = () => {
         const userId = this.props.match.params.userId
-        const playlistId = this.props.match.params.playlistId        
+        const playlistId = this.props.match.params.playlistId
         axios.get(`/api/users/${userId}/playlists/${playlistId}/songs?search=${this.state.searchResults.query}`)
             .then(res => {
                 console.log('getSongsFromAPI', this.state.searchResults.query)
@@ -99,9 +125,9 @@ class Playlist extends Component {
                     musiXMatch: res.data.data.message.body.track_list
                 })
             })
-            // .then(() => {
-            //     this.showHide()
-            // })
+        // .then(() => {
+        //     this.showHide()
+        // })
     }
 
     addSongToPlaylist = (songInfo) => {
@@ -110,8 +136,8 @@ class Playlist extends Component {
         console.log(this.state.songs)
         axios.post(`/api/users/${userId}/playlists/${playlistId}/songs`, songInfo).then(() => {
             return axios.get(`/api/users/${userId}/playlists/${playlistId}/songs?search=${this.state.searchResults.query}`)
-            .then(res => {
-                console.log(res)
+                .then(res => {
+                    console.log(res)
                     this.setState({
                         playlists: res.data.data.message.body.track_list
                     })
@@ -146,11 +172,7 @@ class Playlist extends Component {
         return (
             <div>
 
-                <Link to={userNameUrl}>
-                    <img src={userImage} alt='' height='50' width='50' />{username}
-                </Link>
-
-                <div>
+                <UserNameTop>
                     <input
                         type='text'
                         name='query'
@@ -158,7 +180,13 @@ class Playlist extends Component {
                         onChange={this.handleSearchInput}
                     />
                     <button onClick={this.buttonFunctionCalls}>Submit</button>
-                </div>
+
+                    <Link to={userNameUrl}>
+                        <img src={userImage} alt='' />{username}
+                    </Link>
+                    <a className='trash' onClick={this.deleteUser}><FontAwesomeIcon icon="trash" /></a>
+
+                </UserNameTop>
 
                 <div>
                     {/* {this.state.getSongsFromAPI */}
@@ -176,12 +204,12 @@ class Playlist extends Component {
                                 image: albumArt,
                                 title: trackName,
                                 artist: artistName,
-                                album: albumTitle
+                                // album: albumTitle
                             }
                             return (
                                 <div key={i}>
                                     <br />
-                                    <img src={albumArt} alt='' />
+                                    {/* <img src={albumArt} alt='' /> */}
                                     <h3>Title: {trackName}</h3>
                                     <p>Artist: {artistName}</p>
                                     <p>Album: {albumTitle}</p>
@@ -204,7 +232,7 @@ class Playlist extends Component {
                             const songAlbum = song.album
                             return (
                                 <div key={song._id}>
-                                    <img src={song.albumImage} alt=''  />
+                                    <img src={song.albumImage} alt='' />
                                     <p>Title: {songTitle}</p>
                                     <p>Artist: {songArtist}</p>
                                     <p>Album: {songAlbum}</p>
