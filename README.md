@@ -14,7 +14,11 @@ Much of my time spent on this project was devoted to finding an API that would p
   
   Frameworks/Libraries: 
   
-  - React, Express
+  - React, Express, Mongoose, MongoDB
+  
+  API:
+  
+  - Musixmatch
   
   Other: 
   
