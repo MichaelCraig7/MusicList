@@ -1,4 +1,4 @@
-#### MusicList
+# MusicList
 
 Live Site: https://p3musiclist.herokuapp.com/
 
