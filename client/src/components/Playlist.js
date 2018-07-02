@@ -20,7 +20,7 @@ const SearchBarStyles = styled.div`
     input {
         text-align: left;
         opacity: 0.45;
-        border: none:
+        border: none;
     }
 `
 
@@ -220,10 +220,10 @@ class Playlist extends Component {
                             const albumArt = results.track.album_coverart_100x100
                             const albumTitle = results.track.album_name
                             const newSong = {
-                                image: albumArt,
+                                // image: albumArt,
                                 title: trackName,
                                 artist: artistName,
-                                // album: albumTitle
+                                album: albumTitle
                             }
                             return (
                                 <div key={i}>
@@ -251,7 +251,7 @@ class Playlist extends Component {
                             const songAlbum = song.album
                             return (
                                 <div key={song._id}>
-                                    <img src={song.albumImage} alt='' />
+                                    {/* <img src={song.albumImage} alt='' /> */}
                                     <p>Title: {songTitle}</p>
                                     <p>Artist: {songArtist}</p>
                                     <p>Album: {songAlbum}</p>
