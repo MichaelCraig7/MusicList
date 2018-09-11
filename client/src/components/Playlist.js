@@ -5,9 +5,14 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const PlaylistPage = styled.div`
-        margin: 1% 7.5% 1% 7.5%;
-        font-family: Arial;
-
+    background: linear-gradient(#111e2f, #01243a);
+    opacity: .83;
+    height: 100vh;
+    width: 82.5vw; 
+    justify-content: center;
+    margin: 1% 7.5% 1% 7.5%;
+    border-radius: 1.5%;
+    font-family: Arial;
 `
 
 const SearchBarStyles = styled.div`

@@ -5,12 +5,17 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const BackgroundStyles = styled.div`
-    /* background: linear-gradient(rgb(52, 52, 52), rgb(7, 7, 7));
+    background: linear-gradient(#111e2f, #01243a);
+    opacity: .83;
     height: 100vh;
-    width: 100vw; */
-`
+    width: 82.5vw; 
+    justify-content: center;
+    margin: 1% 7.5% 1% 7.5%;
+    border-radius: 1.5%;
+ `
 
 const UserPageStyles = styled.div`
+    opacity: 1;
     margin: 1% 7.5% 1% 7.5%;
     font-family: Arial;
     a {
@@ -21,6 +26,7 @@ const UserPageStyles = styled.div`
 
 const UserNameTop = styled.div`
     text-align: right;
+    opacity: 1;
     padding: 10px 10px 0 0; 
     a {
         vertical-align: 20px;
@@ -46,6 +52,7 @@ const UserNameTop = styled.div`
 
 const UserNameMiddle = styled.div`
     margin-bottom: 7.5%;
+    opacity: 1.0;
     display: flex;
     img {
         border-radius: 50%;
@@ -62,6 +69,7 @@ const UserNameMiddle = styled.div`
 
 const PlaylistHeading = styled.div`
     display: inline;
+    opacity: 1;
     font-size: 3em;
     div {
         border-bottom: 2px solid white;
@@ -77,6 +85,7 @@ const PlaylistHeading = styled.div`
 
 const GeneralWrapper = styled.div`
         padding: 2.5%;
+        opacity: 1;
         margin: 0;
         img {
             align-self: center;
@@ -97,6 +106,7 @@ const GeneralWrapper = styled.div`
 
 const PlaylistList = styled.div`
     float: left;
+    opacity: 1;
     input {
         border: none;
         opacity: 0.45;
